@@ -10,13 +10,24 @@ interface SnippeteEditProps {
 
 export default function SnippetEditForm({ snippet }: SnippeteEditProps) {
   const [code, setCode] = useState(snippet.code);
+  const [title, setTitle] = useState(snippet.title);
   const handleEditChange = (value: string = "") => {
     setCode(value);
   };
 
-  const editSnippetAction = editSnippet.bind(null, snippet.id, code);
+  const handleEditTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
+
+  const editSnippetAction = editSnippet.bind(null, snippet.id, title, code);
   return (
     <div>
+      <input
+        type="text"
+        defaultValue={snippet.title}
+        onChange={handleEditTitle}
+        className="p-2 border rounded mb-2"
+      />
       <Editor
         height="40vh"
         theme="vs-dark"

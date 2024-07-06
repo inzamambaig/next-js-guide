@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/db";
+import { deleteSnippet } from "@/actions";
 
 interface SnippetShowPageProps {
   params: {
@@ -26,6 +27,8 @@ export default async function SnippetShowPage(props: SnippetShowPageProps) {
     return notFound();
   }
 
+  const deleteSnippetAction = deleteSnippet.bind(null, snippet.id);
+
   return (
     <div className="flex flex-col m-4 justify-between gap-2">
       <div className="flex justify-between items-center">
@@ -37,9 +40,14 @@ export default async function SnippetShowPage(props: SnippetShowPageProps) {
           >
             Edit
           </Link>
-          <button className="p-2 border rounded hover:bg-gray-100">
-            Delete
-          </button>
+          <form action={deleteSnippetAction}>
+            <button
+              type="submit"
+              className="p-2 border rounded hover:bg-gray-100"
+            >
+              Delete
+            </button>
+          </form>
         </div>
       </div>
 
