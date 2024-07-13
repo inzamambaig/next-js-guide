@@ -1,7 +1,8 @@
 "use server";
 
-import { db } from "@/db";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { db } from "@/db";
 
 export async function createSnippet(
   formState: { message: string },
@@ -52,6 +53,7 @@ export async function editSnippet(id: number, title: string, code: string) {
     data: { title, code },
   });
 
+  revalidatePath("/");
   redirect(`/snippets/${id}`);
 }
 
@@ -61,6 +63,6 @@ export async function deleteSnippet(id: number) {
       id,
     },
   });
-
+  revalidatePath("/");
   redirect(`/`);
 }
