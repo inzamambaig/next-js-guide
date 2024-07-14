@@ -42,6 +42,7 @@ export async function createSnippet(
       };
     }
   }
+  revalidatePath("/");
   redirect("/");
 }
 
@@ -53,7 +54,7 @@ export async function editSnippet(id: number, title: string, code: string) {
     data: { title, code },
   });
 
-  revalidatePath("/");
+  revalidatePath(`/snippets/${id}}`);
   redirect(`/snippets/${id}`);
 }
 

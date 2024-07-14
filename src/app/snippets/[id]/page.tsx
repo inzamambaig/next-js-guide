@@ -57,3 +57,15 @@ export default async function SnippetShowPage(props: SnippetShowPageProps) {
     </div>
   );
 }
+
+// This function is used by Next.js to generate static paths for the application
+// It will be called during the build process to determine which pages should be pre-rendered
+export async function generateStaticParams() {
+  // fetch all snippets from the database
+  const snippets = await db.snippet.findMany();
+
+  // This will be used by Next.js to generate static paths for each snippet
+  return snippets.map((snippet) => ({
+    id: snippet.id.toString(),
+  }));
+}
